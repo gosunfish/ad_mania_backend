@@ -1,0 +1,54 @@
+#!/bin/sh
+# Amazon Linux AMI startup script for an emperor instance
+#
+# chkconfig: 2345 80 20
+# description: Autostarts emperor
+
+# Source function library.
+. /etc/rc.d/init.d/functions
+
+emperor="/home/ec2-user/.virtualenvs/looking_glass/bin/uwsgi"
+args="--emperor /home/ec2-user/projects/looking_glass"
+name="emperor"
+log=/var/log/emperor.log
+pidfile=/var/run/emperor.pid
+
+[ -f $emperor ] || exit 1
+
+RETVAL=0
+
+start() {
+     echo -n "Starting $name: "
+     PATH=/home/ec2-user/.virtualenvs/looking_glass/bin:$PATH $emperor $args 2>> $log &
+     RETVAL=$?
+     PID=$!
+     echo $PID > $pidfile
+     echo
+     return $RETVAL
+}
+
+stop() {
+     echo -n "Stopping $name: "
+     kill `cat $pidfile`
+     RETVAL=$?
+     rm $pidfile
+     echo
+     return $RETVAL
+}
+
+case "$1" in
+         start)
+             start
+             ;;
+
+         stop)
+             stop
+             ;;
+
+         restart)
+             stop
+             start
+             ;;
+esac
+
+exit $REVAL

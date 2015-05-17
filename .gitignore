@@ -1,0 +1,22 @@
+# Ignore various operating system gorp
+.DS_Store
+Thumbs.db
+
+# Ignore compiled Python files
+*.pyc
+
+# Ignore setuptools' *.egg-info directories created when you run
+*.egg-info
+
+# Ignore PyCharm/IDEA project directories and plugin files
+.idea
+atlassian-ide-plugin.xml
+
+# Ignore yaml that stores credentials
+config.yaml
+
+# Ignore test.py that indicates dev or prod env
+test.py
+
+# Ignore cj developer key
+cjDeveloperKey

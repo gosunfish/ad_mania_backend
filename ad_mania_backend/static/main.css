@@ -1,0 +1,99 @@
+
+body {
+line-height: 1.4;
+}
+
+img {
+vertical-align: middle;
+width: 240px;
+height: 240px;
+}
+
+body {
+text-align:center;
+background-image:url("../img/palm-trees-03.jpg");
+background-repeat:no-repeat;
+background-size:cover;
+font-family:"Comic Sans MS", cursive, sans-serif;
+}
+
+h1 {
+margin:0 auto;
+padding:10px 0;       
+color: whitesmoke;
+font-size:30px;
+text-align: center;
+font-weight: em;
+}
+
+.wrapper {
+text-align:left;
+}
+
+.header {
+background:black;
+}
+
+.content {
+width:1120px;      
+margin:25px auto;
+background:whitesmoke;
+text-align:left;
+border-radius:5px;
+}
+          
+.content h2 {
+margin:5px 0 0 5px;
+}
+
+.adWrap {
+padding:15px 15px 25px;
+border-radius:10px;
+}
+
+.adWrap:before,
+.adWrap:after {
+content: " ";
+display: table;
+clear: both;
+}
+
+.ad {
+float:left;
+width:240px;
+height:240px;
+margin:15px 15px 5px;
+border:1px solid darkgray;
+border-radius:5px;
+background-color:black;
+}
+
+.ad img {
+margin:0;
+padding:0;
+z-index:1;
+}  
+
+.ad:hover {
+cursor:pointer;
+}
+            
+.ad p {
+cursor:pointer;
+}     
+
+.footer {
+margin:10px 0;
+padding-bottom:150px;
+text-align:center;
+}
+         
+.footer .copyright {
+color:#fff;
+font-size:12px;
+}         
+
+
+
+
+

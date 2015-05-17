@@ -1,0 +1,5 @@
+requests
+uwsgi
+MySQL-python -- or not
+lxml
+pip install --allow-external mysql-connector-python mysql-connector-python

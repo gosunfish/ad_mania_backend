@@ -1,0 +1,8 @@
+CREATE VIEW vwWebsiteAd
+AS
+SELECT w.Website, ad.ID, av.AdvertiserName, c.Category, ad.Height, ad.Width, ad.StartDate, ad.EndDate
+FROM Website w
+JOIN WebsiteAd wa ON w.ID = wa.Website_ID
+JOIN Ad ad ON ad.ID = wa.Ad_ID
+JOIN Advertiser av ON ad.AdvertiserID = av.AdvertiserID
+JOIN Category c ON ad.Category = c.Category and c.Affiliate_ID = av.Affiliate_ID
