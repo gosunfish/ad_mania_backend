@@ -16,7 +16,8 @@ def shred_result(result_xml):
 
 def database_update():
 
-    config=Config().config
+    logger.debug('Database Update Starting')
+    config=Config()
     user = config['DB_LOGIN']
     password = config['DB_PW']
     host = config['DB_HOST']
@@ -29,6 +30,7 @@ def database_update():
     cursor = conn.cursor()
 
     page_number = 0
+    total_records_returned = 0
     records_per_page = 100 # this is the max number allowed by the affiliate api per call.
     records_returned = records_per_page
     headers = {'authorization': cjauth}
@@ -42,8 +44,16 @@ def database_update():
 
         root = ET.fromstring(result_xml.encode('utf8'))
         records_returned = int(root.find('links').get('records-returned'))
+        total_matched = int(root.find('links').get('total-matched'))
+        total_records_returned += records_returned
 
+        logger.info('Total Matched: {}, Records Returned: {}, Total Records Returned: {}'.format(total_matched, records_returned, total_records_returned))
+
+        link_number = 0
         for link in root.iter('link'):
+            link_number+= 1
+            percent_complete = ((total_records_returned - records_returned + link_number) * 100) / total_matched
+            logger.debug('Page Number: {}, Link Number: {}, Percent Complete: {}%'.format(page_number, link_number, percent_complete))
             link_code_html = html.fromstring(link.find('link-code-html').text)
             height = int(link_code_html.xpath('//img/@height')[0])
             width = int(link_code_html.xpath('//img/@height')[0])
@@ -57,7 +67,7 @@ def database_update():
                 'None' if link.find('promotion-end-date').text == None else link.find('promotion-end-date').text,
                 height,
                 width,
-                link.find('link-code-html').text)
+                link.find('link-code-html').text.replace('7782886', '##DOMAIN_ID##'))
 
             try:
                 cursor.callproc('AdMania.prc_UpdateAd',mysql_args)
@@ -67,6 +77,8 @@ def database_update():
 
     cursor.close()
     conn.close()
+
+    logger.debug('Database Update Complete')
 
 
 if __name__ == '__main__':
